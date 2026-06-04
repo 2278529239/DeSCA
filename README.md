@@ -5,10 +5,7 @@
   <p><em>（论文名：还没确定 | 论文链接：还没确定）</em></p>
 </div>
 <div align="center">
-![](https://img.shields.io/github/last-commit/DeSCA/DeSCA?color=green)
-![](https://img.shields.io/github/stars/DeSCA/DeSCA?color=yellow)
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/DeSCA/DeSCA/graphs/commit-activity)
-[![PR's Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](http://makeapullrequest.com)
+未知
 </div>
 <div align="center">
 > ⭐ DeSCA is a plug-and-play framework for streaming spatio-temporal prediction, enabling continual adaptation to evolving graph structures and distribution shifts.
@@ -27,7 +24,7 @@ DeSCA is a **plug-and-play plugin module** designed to enhance existing spatio-t
 By integrating DeSCA into your spatio-temporal forecasting pipeline, you can effectively improve prediction accuracy and robustness when faced with evolving graph structures and distribution shifts in streaming scenarios.
 
 <p align="center">
-    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=spatial%20temporal%20graph%20forecasting%20continual%20learning%20neural%20network%20visualization%20city%20traffic&image_size=landscape_16_9" alt="CLST Overview" align="center" width="800px" />
+    <img src="fig/structure.png" alt="DeSCA Framework" align="center" width="800px" />
 </p>
 
 ## 📊 Datasets
@@ -40,7 +37,10 @@ The framework supports the following datasets:
 | **PEMS04** | Traditional PEMS dataset for baseline comparison | Traffic forecasting |
 
 ### Dataset Download
-Processed datasets are available from the [EAC repository](https://github.com/Onedean/EAC). Please download and place them in the `data/` directory.
+- **PEMS-Stream** and **AIR-Stream**: Available from the [EAC repository](https://github.com/Onedean/EAC)
+- **PEMS04**: Available from the [TEAM repository](https://github.com/kvmduc/TEAM-topo-evo-traffic-forecasting)
+
+Please download the datasets and place them in the `data/` directory.
 
 ## 🚀 Getting Started
 
@@ -48,7 +48,7 @@ Processed datasets are available from the [EAC repository](https://github.com/On
 1. Create and activate the environment:
 ```shell
 conda env create -f environment.yaml
-conda activate CLST
+conda activate stg
 ```
 
 ### Quick Start
@@ -109,21 +109,7 @@ CLST/
 
 ## 🎯 Experimental Results
 
-### Comparison on PEMS-Stream
-| Method | MAE | RMSE | MAPE |
-|---|---|---|---|
-| EAC | 23.45 | 45.67 | 8.92 |
-| STBP | 22.13 | 43.21 | 8.15 |
-| DCRNNpre | 28.91 | 52.34 | 10.45 |
-| PDFormerpre | 26.78 | 49.87 | 9.78 |
-
-### Comparison on AIR-Stream
-| Method | MAE | RMSE | MAPE |
-|---|---|---|---|
-| EAC | 12.34 | 18.56 | 15.23 |
-| STBP | 11.89 | 17.23 | 14.56 |
-| DCRNNpre | 15.67 | 22.34 | 18.78 |
-| PDFormerpre | 14.23 | 20.12 | 17.34 |
+后补
 
 ## 📝 Configuration
 All experiment configurations are stored in the `conf/` directory. Each dataset has its own subdirectory with configuration files for different methods. Key configuration parameters:
@@ -168,7 +154,7 @@ We greatly appreciate the following GitHub repositories for their valuable code 
 - [STBP](https://github.com/Aoyu-Liu/STBP) - Spatio-temporal pattern bank
 - [TrafficStream](https://github.com/AprLie/TrafficStream) - Traffic stream learning
 - [STKEC](https://github.com/wangbinwu13116175205/STKEC) - Spatio-temporal knowledge embedding
-- [LargeST](https://github.com/liuxu77/LargeST) - Large-scale spatio-temporal learning
+
 
 ## 📄 License
 This project is licensed under the Apache-2.0 License.

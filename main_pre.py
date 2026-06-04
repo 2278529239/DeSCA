@@ -15,7 +15,7 @@ from src.model.modelpre import (
     TrafficStream_Model, STKEC_Model,
     EAC_Modelpre, EAC_Model,
     Universal_Model, STID_Model,
-    GraphWaveNet_Model, ITransformer_Model,
+    GraphWaveNet_Model,
     DCRNN_Modelpre, DCRNN_Model,
     PDFormer_Modelpre, PDFormer_Model
 )
