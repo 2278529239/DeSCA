@@ -2,7 +2,7 @@
   <h2><b><big>🔌 DeSCA</big>
 
  <u>De</u>viation-aware <u>S</u>patio-temporal <u>C</u>ontinual <u>A</u>daptation: A Plug-and-Play Framework for Streaming Spatio-Temporal Prediction</b></h2>
-  <p><em>（论文名：还没确定 | 论文链接：还没确定）</em></p>
+  <p><em>Paper under review</em></p>
 </div>
 <div align="center">
 未知
@@ -15,14 +15,16 @@
 🚩 **News** (Jun. 2026): DeSCA framework is now fully open source with support for streaming spatio-temporal prediction!
 
 ## 📖 Introduction
-DeSCA is a **plug-and-play plugin module** designed to enhance existing spatio-temporal prediction models through innovative mechanisms. Unlike standalone models, DeSCA can be seamlessly integrated into various spatio-temporal forecasting backbones such as STID, GWNET, DCRNN, and PDFormer.
+DeSCA is a plug-and-play continual adaptation framework for streaming spatio-temporal prediction.
 
-**Core Mechanisms:**
-- **Spatio-temporal Feature Decoupling**: Separates spatial and temporal features to better capture their distinct patterns and dynamics, enabling more precise modeling of complex spatio-temporal relationships.
-- **Deviation Detection with Gated Update**: Incorporates a gating mechanism that detects distribution shifts in streaming data and adaptively updates model parameters, enabling continual adaptation without catastrophic forgetting.
+Unlike conventional forecasting models, DeSCA is designed as an external adaptation module that can be seamlessly integrated into diverse forecasting backbones. It enables existing models to continuously adapt to evolving graph structures and distribution shifts while alleviating catastrophic forgetting.
 
-By integrating DeSCA into your spatio-temporal forecasting pipeline, you can effectively improve prediction accuracy and robustness when faced with evolving graph structures and distribution shifts in streaming scenarios.
+The framework consists of two key components:
 
+- Spatio-temporal Decoupling Module (SDM)
+- Deviation-aware Adaptive Update Module (DAUM)
+
+Together, these components identify representation deviations, selectively update model parameters, and maintain long-term forecasting performance in dynamic streaming environments.
 <p align="center">
     <img src="fig/structure.png" alt="DeSCA Framework" align="center" width="800px" />
 </p>
@@ -52,38 +54,40 @@ conda activate stg
 ```
 
 ### Quick Start
-Run the main training script with different configurations:
 
-#### EAC Method
-```shell
-python main_pre.py --conf conf/PEMS/eac.json --gpuid 0 --seed 42
+#### Run DeSCA
+
+```bash
+python main_pre.py \
+    --conf conf/PEMS/eac.json \
+    --gpuid 0 \
+    --seed 43
 ```
 
-#### STBP Method
-```shell
-python mainSTBP.py --conf conf/PEMS/STBP_PEMS.json --gpuid 0 --seed 42
+#### Run STBP
+
+```bash
+python mainSTBP.py \
+    --conf conf/PEMS/STBP_PEMS.json \
+    --gpuid 0 \
+    --seed 43
 ```
 
-#### Baseline Methods
-```shell
-# DCRNN baseline
-python main_pre.py --conf conf/PEMS/DCRNNpre.json --gpuid 0 --seed 42
+#### Run All Experiments
 
-# PDFormer baseline
-python main_pre.py --conf conf/PEMS/PDFormerpre.json --gpuid 0 --seed 42
+```bash
+bash scripts/run_all.sh
 ```
 
-### Supported Methods
-| Method | Type | Description |
-|---|---|---|
-| **EAC** | Prompt tuning | Expand and Compress for continual learning |
-| **STBP** | Pattern bank | Spatio-temporal backbone with pattern bank |
-| **DCRNNpre** | Baseline | DCRNN with incremental adaptation |
-| **PDFormerpre** | Baseline | PDFormer with incremental adaptation |
-| **STID** | Baseline | Spatial-Temporal Identity network |
-| **GWNET** | Baseline | Graph WaveNet |
-| **STKEC** | Baseline | Spatio-temporal knowledge embedding |
-| **TrafficStream** | Baseline | Traffic stream learning |
+## Supported Backbones
+| Backbone | Type |
+|-----------|-----------|
+| EAC | Prompt-based continual forecasting |
+| STBP | Pattern-bank continual forecasting |
+| DCRNN+ | Recurrent graph forecasting |
+| PDFormer+ | Transformer-based forecasting |
+DeSCA is not a standalone forecasting model.
+Instead, it serves as a plug-and-play continual adaptation module that can be integrated into different streaming spatio-temporal forecasting backbones.
 
 ## 📁 Project Structure
 ```
