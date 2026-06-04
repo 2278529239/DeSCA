@@ -370,7 +370,6 @@ if __name__ == "__main__":
     'EACpre': EAC_Modelpre,
     'EAC': EAC_Model, 
     'Universal': Universal_Model,
-    'itransformer': ITransformer_Model,
     'STID': STID_Model,
     'gwnet': GraphWaveNet_Model,
     'DCRNNpre': DCRNN_Modelpre,
