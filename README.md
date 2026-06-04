@@ -47,15 +47,19 @@ Please download the datasets and place them in the `data/` directory.
 ## 🚀 Getting Started
 
 ### Installation
-1. Create and activate the environment:
-```shell
+
+Create and activate the environment:
+
+```bash
 conda env create -f environment.yaml
 conda activate stg
 ```
 
 ### Quick Start
 
-#### Run DeSCA
+DeSCA is a plug-and-play continual adaptation framework that can be integrated into different streaming spatio-temporal forecasting backbones.
+
+#### Example 1: DeSCA + EAC
 
 ```bash
 python main_pre.py \
@@ -64,7 +68,7 @@ python main_pre.py \
     --seed 43
 ```
 
-#### Run STBP
+#### Example 2: DeSCA + STBP
 
 ```bash
 python mainSTBP.py \
@@ -73,7 +77,27 @@ python mainSTBP.py \
     --seed 43
 ```
 
+#### Example 3: DeSCA + DCRNN+
+
+```bash
+python main_pre.py \
+    --conf conf/PEMS/DCRNNplus.json \
+    --gpuid 0 \
+    --seed 43
+```
+
+#### Example 4: DeSCA + PDFormer+
+
+```bash
+python main_pre.py \
+    --conf conf/PEMS/PDFormerplus.json \
+    --gpuid 0 \
+    --seed 43
+```
+
 #### Run All Experiments
+
+To reproduce all experiments reported in the paper:
 
 ```bash
 bash scripts/run_all.sh
