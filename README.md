@@ -2,6 +2,7 @@
   <h2><b><big>🔌 DeSCA</big>
 
  <u>De</u>viation-aware <u>S</u>patio-temporal <u>C</u>ontinual <u>A</u>daptation: A Plug-and-Play Framework for Streaming Spatio-Temporal Prediction</b></h2>
+  <p><em>（论文名：还没确定 | 论文链接：还没确定）</em></p>
 </div>
 <div align="center">
 ![](https://img.shields.io/github/last-commit/DeSCA/DeSCA?color=green)
@@ -17,7 +18,13 @@
 🚩 **News** (Jun. 2026): DeSCA framework is now fully open source with support for streaming spatio-temporal prediction!
 
 ## 📖 Introduction
-Continual learning for spatio-temporal graph forecasting addresses the challenge of adapting models to evolving graph structures and distribution shifts in streaming scenarios. This repository provides a unified framework for evaluating various continual learning methods on spatio-temporal forecasting tasks, including state-of-the-art approaches like EAC, STBP, and several baselines.
+DeSCA is a **plug-and-play plugin module** designed to enhance existing spatio-temporal prediction models through innovative mechanisms. Unlike standalone models, DeSCA can be seamlessly integrated into various spatio-temporal forecasting backbones such as STID, GWNET, DCRNN, and PDFormer.
+
+**Core Mechanisms:**
+- **Spatio-temporal Feature Decoupling**: Separates spatial and temporal features to better capture their distinct patterns and dynamics, enabling more precise modeling of complex spatio-temporal relationships.
+- **Deviation Detection with Gated Update**: Incorporates a gating mechanism that detects distribution shifts in streaming data and adaptively updates model parameters, enabling continual adaptation without catastrophic forgetting.
+
+By integrating DeSCA into your spatio-temporal forecasting pipeline, you can effectively improve prediction accuracy and robustness when faced with evolving graph structures and distribution shifts in streaming scenarios.
 
 <p align="center">
     <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=spatial%20temporal%20graph%20forecasting%20continual%20learning%20neural%20network%20visualization%20city%20traffic&image_size=landscape_16_9" alt="CLST Overview" align="center" width="800px" />
@@ -30,7 +37,6 @@ The framework supports the following datasets:
 |---|---|---|
 | **PEMS-Stream** | Traffic flow data from California highways | Traffic forecasting |
 | **AIR-Stream** | Air quality monitoring data | Air quality forecasting |
-| **CA-Stream** | California traffic data with node expansion | Continual traffic forecasting |
 | **PEMS04** | Traditional PEMS dataset for baseline comparison | Traffic forecasting |
 
 ### Dataset Download
@@ -132,6 +138,8 @@ All experiment configurations are stored in the `conf/` directory. Each dataset 
 - `patience`: Early stopping patience
 
 ## 📚 References
+
+⚠️ **论文名：还没确定** | **论文链接：还没确定**
 
 If you use this framework in your research, please consider citing the following papers:
 
