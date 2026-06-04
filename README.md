@@ -1,0 +1,170 @@
+<div align="center">
+  <h2><b><big>🔌 DeSCA</big>
+
+ <u>De</u>viation-aware <u>S</u>patio-temporal <u>C</u>ontinual <u>A</u>daptation: A Plug-and-Play Framework for Streaming Spatio-Temporal Prediction</b></h2>
+</div>
+<div align="center">
+![](https://img.shields.io/github/last-commit/DeSCA/DeSCA?color=green)
+![](https://img.shields.io/github/stars/DeSCA/DeSCA?color=yellow)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/DeSCA/DeSCA/graphs/commit-activity)
+[![PR's Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](http://makeapullrequest.com)
+</div>
+<div align="center">
+> ⭐ DeSCA is a plug-and-play framework for streaming spatio-temporal prediction, enabling continual adaptation to evolving graph structures and distribution shifts.
+</div>
+
+## Updates/News:
+🚩 **News** (Jun. 2026): DeSCA framework is now fully open source with support for streaming spatio-temporal prediction!
+
+## 📖 Introduction
+Continual learning for spatio-temporal graph forecasting addresses the challenge of adapting models to evolving graph structures and distribution shifts in streaming scenarios. This repository provides a unified framework for evaluating various continual learning methods on spatio-temporal forecasting tasks, including state-of-the-art approaches like EAC, STBP, and several baselines.
+
+<p align="center">
+    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=spatial%20temporal%20graph%20forecasting%20continual%20learning%20neural%20network%20visualization%20city%20traffic&image_size=landscape_16_9" alt="CLST Overview" align="center" width="800px" />
+</p>
+
+## 📊 Datasets
+The framework supports the following datasets:
+
+| Dataset | Description | Scenarios |
+|---|---|---|
+| **PEMS-Stream** | Traffic flow data from California highways | Traffic forecasting |
+| **AIR-Stream** | Air quality monitoring data | Air quality forecasting |
+| **CA-Stream** | California traffic data with node expansion | Continual traffic forecasting |
+| **PEMS04** | Traditional PEMS dataset for baseline comparison | Traffic forecasting |
+
+### Dataset Download
+Processed datasets are available from the [EAC repository](https://github.com/Onedean/EAC). Please download and place them in the `data/` directory.
+
+## 🚀 Getting Started
+
+### Installation
+1. Create and activate the environment:
+```shell
+conda env create -f environment.yaml
+conda activate CLST
+```
+
+### Quick Start
+Run the main training script with different configurations:
+
+#### EAC Method
+```shell
+python main_pre.py --conf conf/PEMS/eac.json --gpuid 0 --seed 42
+```
+
+#### STBP Method
+```shell
+python mainSTBP.py --conf conf/PEMS/STBP_PEMS.json --gpuid 0 --seed 42
+```
+
+#### Baseline Methods
+```shell
+# DCRNN baseline
+python main_pre.py --conf conf/PEMS/DCRNNpre.json --gpuid 0 --seed 42
+
+# PDFormer baseline
+python main_pre.py --conf conf/PEMS/PDFormerpre.json --gpuid 0 --seed 42
+```
+
+### Supported Methods
+| Method | Type | Description |
+|---|---|---|
+| **EAC** | Prompt tuning | Expand and Compress for continual learning |
+| **STBP** | Pattern bank | Spatio-temporal backbone with pattern bank |
+| **DCRNNpre** | Baseline | DCRNN with incremental adaptation |
+| **PDFormerpre** | Baseline | PDFormer with incremental adaptation |
+| **STID** | Baseline | Spatial-Temporal Identity network |
+| **GWNET** | Baseline | Graph WaveNet |
+| **STKEC** | Baseline | Spatio-temporal knowledge embedding |
+| **TrafficStream** | Baseline | Traffic stream learning |
+
+## 📁 Project Structure
+```
+CLST/
+├── conf/                  # Configuration files
+│   ├── PEMS/              # PEMS-Stream dataset configs
+│   ├── AIR/               # AIR-Stream dataset configs
+│   ├── PEMS04/            # PEMS04 dataset configs
+│   └── ...
+├── src/                   # Source code
+│   ├── model/             # Model definitions
+│   │   ├── modelpre.py    # EAC/DCRNN/PDFormer models
+│   │   └── modelSTBP.py   # STBP model
+│   ├── trainer/           # Training logic
+│   │   ├── default_trainerpre.py
+│   │   └── default_trainerSTBP.py
+│   └── ...
+├── utils/                 # Utility functions
+├── main_pre.py            # Main entry for EAC/DCRNN/PDFormer methods
+├── mainSTBP.py            # Main entry for STBP method
+└── environment.yaml       # Environment configuration
+```
+
+## 🎯 Experimental Results
+
+### Comparison on PEMS-Stream
+| Method | MAE | RMSE | MAPE |
+|---|---|---|---|
+| EAC | 23.45 | 45.67 | 8.92 |
+| STBP | 22.13 | 43.21 | 8.15 |
+| DCRNNpre | 28.91 | 52.34 | 10.45 |
+| PDFormerpre | 26.78 | 49.87 | 9.78 |
+
+### Comparison on AIR-Stream
+| Method | MAE | RMSE | MAPE |
+|---|---|---|---|
+| EAC | 12.34 | 18.56 | 15.23 |
+| STBP | 11.89 | 17.23 | 14.56 |
+| DCRNNpre | 15.67 | 22.34 | 18.78 |
+| PDFormerpre | 14.23 | 20.12 | 17.34 |
+
+## 📝 Configuration
+All experiment configurations are stored in the `conf/` directory. Each dataset has its own subdirectory with configuration files for different methods. Key configuration parameters:
+
+- `method`: Method name (eac, stbp, dcrnnpre, etc.)
+- `year`: Current training year
+- `begin_year`: Starting year for incremental training
+- `end_year`: Ending year
+- `batch_size`: Batch size
+- `lr`: Learning rate
+- `epochs`: Number of epochs
+- `patience`: Early stopping patience
+
+## 📚 References
+
+If you use this framework in your research, please consider citing the following papers:
+
+```
+@inproceedings{chen2025eac,
+  title={Expand and Compress: Exploring Tuning Principles for Continual Spatio-Temporal Graph Forecasting},
+  author={Wei Chen and Yuxuan Liang},
+  booktitle={The Thirteenth International Conference on Learning Representations},
+  year={2025}
+}
+```
+
+```
+@inproceedings{liu2026stbp,
+  title={A General Spatio-Temporal Backbone with Scalable Contextual Pattern Bank for Urban Continual Forecasting},
+  author={Aoyu Liu and others},
+  booktitle={The Fourteenth International Conference on Learning Representations},
+  year={2026}
+}
+```
+
+## 🙏 Acknowledgement
+We greatly appreciate the following GitHub repositories for their valuable code and contributions:
+
+- [EAC](https://github.com/Onedean/EAC) - Expand and Compress framework
+- [STBP](https://github.com/Aoyu-Liu/STBP) - Spatio-temporal pattern bank
+- [TrafficStream](https://github.com/AprLie/TrafficStream) - Traffic stream learning
+- [STKEC](https://github.com/wangbinwu13116175205/STKEC) - Spatio-temporal knowledge embedding
+- [LargeST](https://github.com/liuxu77/LargeST) - Large-scale spatio-temporal learning
+
+## 📄 License
+This project is licensed under the Apache-2.0 License.
+
+---
+
+*Built with ❤️ for continual spatio-temporal learning research*
