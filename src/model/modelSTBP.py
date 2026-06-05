@@ -383,9 +383,8 @@ class STBP_Model(nn.Module):
                 self.h_anchor_t += g_t
 
             # unfreeze prompts when gate fires (||delta|| > tau)
-            eps = 1e-6
-            update_s = (gate_s_act > eps).item()
-            update_t = (gate_t_act > eps).item()
+            update_s = (gate_s_act > 0).item()
+            update_t = (gate_t_act > 0).item()
 
             self.P_s.requires_grad_(update_s)
             self.P_t.requires_grad_(update_t)

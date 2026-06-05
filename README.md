@@ -113,9 +113,6 @@ bash scripts/run_all.sh
 DeSCA is not a standalone forecasting model.
 Instead, it serves as a plug-and-play continual adaptation module that can be integrated into different streaming spatio-temporal forecasting backbones.
 
-## 🎯 Experimental Results
-
-后补
 
 
 ## 🔗 Acknowledgement
