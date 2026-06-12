@@ -165,7 +165,7 @@ if __name__ == "__main__":
     parser.add_argument("--paral", type = int, default = 0)
     parser.add_argument("--gpuid", type = int, default = 1)
     parser.add_argument("--logname", type = str, default = "info")
-    parser.add_argument("--method", type = str, default = "STBP")
+    parser.add_argument("--method", type = str, default = "STBP_DeSCA")
     parser.add_argument("--load_first_year", type = int, default = 0, help="0: training first year, 1: load from model path of first year")
     parser.add_argument("--first_year_model_path", type = str, default = "", help='specify a pretrained model root')
     

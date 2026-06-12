@@ -221,7 +221,7 @@ def train(inputs, args):
             
             pred_loss = MAE_torch(pred, data.y, 0.0)
             #aux_loss = model.get_aux_loss() if args.method == 'EAC' else 0.0
-            aux_loss = model.get_aux_loss() if args.method in ['EAC','DCRNNplus','PDFormerplus'] else 0.0
+            aux_loss = model.get_aux_loss() if args.method in ['EAC_DeSCA','DCRNN_DeSCA','PDFormer_DeSCA'] else 0.0
             loss = pred_loss + aux_loss
             
             

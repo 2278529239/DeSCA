@@ -85,7 +85,7 @@ def main(args):
     args.result = {"3":{" MAE":{}, "MAPE":{}, "RMSE":{}}, "6":{" MAE":{}, "MAPE":{}, "RMSE":{}}, "12":{" MAE":{}, "MAPE":{}, "RMSE":{}}, "Avg":{" MAE":{}, "MAPE":{}, "RMSE":{}}}
     mkdirs(args.save_data_path)
     vars(args)["graph_size_list"] = []
-    if args.method in ['EAC', 'DCRNNplus']:
+    if args.method in ['EAC_DeSCA', 'DCRNN_DeSCA','PDFormer_DeSCA]:
         args.dev_logger = build_dev_logger(osp.join(args.path, "deviation.log"))
 
     model = None
