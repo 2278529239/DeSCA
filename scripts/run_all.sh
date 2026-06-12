@@ -24,9 +24,9 @@ echo "=================================================================="
 echo ""
 echo "==================== EAC + DeSCA ===================="
 
-python main_pre.py --conf conf/PEMS/eac.json   --gpuid ${GPU} --seed 43
-python main_pre.py --conf conf/AIR/eac.json    --gpuid ${GPU} --seed 46
-python main_pre.py --conf conf/PEMS04/eac.json --gpuid ${GPU} --seed 43
+python main.py --conf conf/PEMS03/eac_DeSCA.json   --gpuid ${GPU} --seed 43
+python main.py --conf conf/AIR/eac_DeSCA.json    --gpuid ${GPU} --seed 46
+python main.py --conf conf/PEMS04/eac_DeSCA.json --gpuid ${GPU} --seed 43
 
 
 ###############################################################################
@@ -36,33 +36,33 @@ python main_pre.py --conf conf/PEMS04/eac.json --gpuid ${GPU} --seed 43
 echo ""
 echo "==================== STBP + DeSCA ===================="
 
-python mainSTBP.py --conf conf/PEMS/STBP_PEMS.json --gpuid ${GPU} --seed 43
-python mainSTBP.py --conf conf/AIR/STBP_AIR.json   --gpuid ${GPU} --seed 44
-python mainSTBP.py --conf conf/PEMS04/STBP_04.json --gpuid ${GPU} --seed 43
+python mainSTBP_DeSCA.py --conf conf/PEMS03/STBP_DeSCA.json --gpuid ${GPU} --seed 43
+python mainSTBP_DeSCA.py --conf conf/AIR/STBP_DeSCA.json   --gpuid ${GPU} --seed 44
+python mainSTBP_DeSCA.py --conf conf/PEMS04/STBP_DeSCA.json --gpuid ${GPU} --seed 43
 
 
 ###############################################################################
-# DCRNN+ + DeSCA
-###############################################################################
-
-echo ""
-echo "==================== DCRNN+ + DeSCA ===================="
-
-python main_pre.py --conf conf/PEMS/DCRNNplus.json   --gpuid ${GPU} --seed 43
-python main_pre.py --conf conf/AIR/DCRNNplus.json    --gpuid ${GPU} --seed 43
-python main_pre.py --conf conf/PEMS04/DCRNNplus.json --gpuid ${GPU} --seed 43
-
-
-###############################################################################
-# PDFormer+ + DeSCA
+# DCRNN + DeSCA
 ###############################################################################
 
 echo ""
-echo "==================== PDFormer+ + DeSCA ===================="
+echo "==================== DCRNN + DeSCA ===================="
 
-python main_pre.py --conf conf/PEMS/PDFormerplus.json   --gpuid ${GPU} --seed 43
-python main_pre.py --conf conf/AIR/PDFormerplus.json    --gpuid ${GPU} --seed 85
-python main_pre.py --conf conf/PEMS04/PDFormerplus.json --gpuid ${GPU} --seed 43
+python main.py --conf conf/PEMS03/DCRNN_DeSCA.json   --gpuid ${GPU} --seed 43
+python main.py --conf conf/AIR/DCRNN_DeSCA.json    --gpuid ${GPU} --seed 43
+python main.py --conf conf/PEMS04/DCRNN_DeSCA.json --gpuid ${GPU} --seed 43
+
+
+###############################################################################
+# PDFormer + DeSCA
+###############################################################################
+
+echo ""
+echo "==================== PDFormer + DeSCA ===================="
+
+python main.py --conf conf/PEMS03/PDFormer_DeSCA.json   --gpuid ${GPU} --seed 43
+python main.py --conf conf/AIR/PDFormer_DeSCA.json    --gpuid ${GPU} --seed 85
+python main.py --conf conf/PEMS04/PDFormer_DeSCA.json --gpuid ${GPU} --seed 43
 
 
 echo ""

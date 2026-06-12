@@ -12,34 +12,29 @@
     "y_len": 12,
     "x_len": 12,
     "data_process": 0,
-    "raw_data_path": "data/AIR-Few/RawData/",
-    "save_data_path": "data/AIR-Few/FastData/",
-    "graph_path": "data/AIR-Few/graph/",
-    "model_path": "log/AIR-Few/",
-    "gcn":{
+    "raw_data_path": "data/AIR/RawData/",
+    "save_data_path": "data/AIR/FastData/",
+    "graph_path": "data/AIR/graph/",
+    "model_path": "log/AIR/",
+    "gcn": {
         "in_channel": 12,
         "out_channel": 12,
         "hidden_channel": 64
     },
-
-    "tcn":{
+    "tcn": {
         "in_channel": 1,
         "out_channel": 1,
         "kernel_size": 3,
         "dilation": 1
     },
-    
-    "method": "EAC",
-    "logname": "eac",
+    "method": "DCRNN",
+    "logname": "dcrnn",
+
     "init": true,
     "train": 1,
     "auto_test": 1,
-
     "strategy": "retrain",
-
     "detect": false,
-
     "ewc": false,
-    
     "replay": false
 }

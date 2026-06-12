@@ -42,18 +42,27 @@ def train(inputs, args):
         CSTL_model, _  = load_best_model(args) 
         model = CSTL_model
         
-        if args.method == 'STBP':
+        if args.method == 'STBP_DeSCA':
+            args.logger.info("[CL] Before Freeze backbone parameters, trainable parameters:")
+            for n, p in model.named_parameters():
+                if p.requires_grad:
+                    args.logger.info(f"    [Trainable] {n}")
+            backbone_prefix = ("fconv1", "stmodule", "fconv2")
             for name, param in model.named_parameters():
-                if "pattern_bank" in name: 
-                    param.requires_grad = True
+                if name.startswith(backbone_prefix):
+                    param.requires_grad = False
                 else:
-                    param.requires_grad = False 
+                    param.requires_grad = True
+            args.logger.info("[CL] After Freeze backbone parameters, trainable parameters:")
+            for n, p in model.named_parameters():
+                if p.requires_grad:
+                    args.logger.info(f"    [Trainable] {n}")
             model.expand_adaptive_params(args.graph_size)
         
     else:
         CSTL_model = args.methods[args.method](args).to(args.device)  
         model = CSTL_model
-        if args.method == 'STBP':
+        if args.method == 'STBP_DeSCA':
             model.expand_adaptive_params(args.graph_size)
     
     model.count_parameters()
@@ -76,7 +85,6 @@ def train(inputs, args):
     
     
     for epoch in range(args.epoch):
-
         epoch_iter_times = []
         epoch_peak_mems = []
         
@@ -95,7 +103,9 @@ def train(inputs, args):
             optimizer.zero_grad()
             pred = model(data, args.sub_adj)
             
-            loss = MAE_torch(pred, data.y, 0.0)
+            pred_loss = MAE_torch(pred, data.y, 0.0)
+            aux = model.aux_loss if hasattr(model, "aux_loss") else 0.0
+            loss = pred_loss + aux
             
             training_loss += float(loss)
             cn += 1
@@ -131,7 +141,6 @@ def train(inputs, args):
                 cn += 1
         validation_loss = float(validation_loss/cn)
 
-
         avg_iter_time_ms = float(np.mean(epoch_iter_times)) if len(epoch_iter_times) > 0 else 0.0
         max_peak_mem_gb = float(np.max(epoch_peak_mems)) if len(epoch_peak_mems) > 0 else 0.0
 
@@ -139,6 +148,7 @@ def train(inputs, args):
             f"[Efficiency][Epoch {epoch}] avg_train_iter_time_ms:{avg_iter_time_ms:.4f}, "
             f"peak_mem_gb:{max_peak_mem_gb:.4f}"
         )
+
         args.logger.info(f"epoch:{epoch}, training loss:{training_loss:.4f} validation loss:{validation_loss:.4f}")
         
         if validation_loss <= lowest_validation_loss:
@@ -158,6 +168,7 @@ def train(inputs, args):
     
     #test_model(best_model, args, test_loader, True)
     test_stats = test_model(best_model, args, test_loader, True)
+
 
     #args.result[args.year] = {"total_time": total_time, "average_time": sum(use_time)/len(use_time), "epoch_num": epoch+1}
     args.result[args.year] = {
@@ -217,6 +228,7 @@ def test_model(model, args, testset, pin_memory):
         
         pred_ = np.concatenate(pred_, 0)
         truth_ = np.concatenate(truth_, 0)
+
 
         cal_metric(truth_, pred_, args)
     return {

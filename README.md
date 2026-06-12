@@ -11,36 +11,42 @@
 > ⭐ DeSCA is a plug-and-play framework for streaming spatio-temporal prediction, enabling continual adaptation to evolving graph structures and distribution shifts.
 </div>
 
-## Updates/News:
-🚩 **News** (Jun. 2026): DeSCA framework is now fully open source with support for streaming spatio-temporal prediction!
+## Updates/News
 
+🚩 **News (Jun. 2026):** DeSCA has been released as an open-source framework for streaming spatio-temporal prediction and continual adaptation.
 ## 📖 Introduction
-DeSCA is a plug-and-play continual adaptation framework for streaming spatio-temporal prediction.
 
-Unlike conventional forecasting models, DeSCA is designed as an external adaptation module that can be seamlessly integrated into diverse forecasting backbones. It enables existing models to continuously adapt to evolving graph structures and distribution shifts while alleviating catastrophic forgetting.
+Spatio-temporal data are continuously collected in ubiquitous cyber-physical systems, often exhibiting spatio-temporal non-stationarity and continuous distribution shifts. This requires spatio-temporal models to continually adapt to streaming spatio-temporal data.
 
-The framework consists of two key components:
+Existing methods that update backbone parameters are limited in both efficiency and effectiveness, incurring substantial training costs and risking catastrophic forgetting. Recent methods improve efficiency by freezing the backbone and updating lightweight plug-in parameters. However, most lightweight adaptation methods apply a rigid adaptation strategy to spatial and temporal changes, overlooking that heterogeneous spatio-temporal non-stationarity may manifest as distinct temporal shifts, spatial shifts, or joint shifts. This often introduces unnecessary updates and limits adaptation effectiveness.
 
-- Spatio-temporal Decoupling Module (SDM)
-- Deviation-aware Adaptive Update Module (DAUM)
+To address these limitations, we propose **DeSCA**, a **Decoupled and Selective Continual Adaptation** framework for streaming spatio-temporal prediction.
 
-Together, these components identify representation deviations, selectively update model parameters, and maintain long-term forecasting performance in dynamic streaming environments.
+Specifically:
+
+- A **Decoupled Prompt Mapping Module** constructs spatial and temporal prompts to provide separate adaptation feeds.
+- A **Prototype-aware Shift Detection Module** derives spatial and temporal deviations to identify temporal-dominant, spatial-dominant, and joint shift patterns.
+- A **Selective Gated Updating Module** filters insignificant deviations and activates only the prompt parameters indicated by effective deviations, reducing unnecessary updates and improving adaptation stability.
+
+Extensive experiments on three real-world streaming spatio-temporal datasets demonstrate that DeSCA consistently improves four representative backbone architectures, achieving an average performance gain of **8.56%** across all backbones and evaluation metrics while maintaining **linear time and space complexity**.
+
 <p align="center">
     <img src="fig/structure.png" alt="DeSCA Framework" align="center" width="800px" />
 </p>
 
 ## 📊 Datasets
-The framework supports the following datasets:
 
-| Dataset | Description | Scenarios |
-|---|---|---|
-| **PEMS-Stream** | Traffic flow data from California highways | Traffic forecasting |
-| **AIR-Stream** | Air quality monitoring data | Air quality forecasting |
-| **PEMS04** | Traditional PEMS dataset for baseline comparison | Traffic forecasting |
+The framework supports the following streaming spatio-temporal datasets:
+
+| Dataset | Description | Scenario |
+|----------|-------------|----------|
+| **PEMS03-Stream** | Streaming traffic data derived from PEMS03 | Traffic forecasting |
+| **PEMS04-Stream** | Streaming traffic data derived from PEMS04 | Traffic forecasting |
+| **Air-Stream** | Streaming air quality monitoring data | Air quality forecasting |
 
 ### Dataset Download
-- **PEMS-Stream** and **AIR-Stream**: Available from the [EAC repository](https://github.com/Onedean/EAC)
-- **PEMS04**: Available from the [TEAM repository](https://github.com/kvmduc/TEAM-topo-evo-traffic-forecasting)
+- **PEMS03-Stream** and **AIR-Stream**: Available from the [EAC repository](https://github.com/Onedean/EAC)
+- **PEMS04-Stream**: Available from the [TEAM repository](https://github.com/kvmduc/TEAM-topo-evo-traffic-forecasting)
 
 Please download the datasets and place them in the `data/` directory.
 
@@ -103,16 +109,16 @@ To reproduce all experiments reported in the paper:
 bash scripts/run_all.sh
 ```
 
-| Backbone / Method | Category |
-|-------------------|----------|
-| EAC | Continual forecasting |
-| STBP | Continual forecasting |
-| DCRNN | Spatio-temporal forecasting |
-| PDFormer | Spatio-temporal forecasting |
+| Backbone | Model Family | Variant |
+|-----------|-------------|----------|
+| DCRNN | RNN-based | DCRNN w/ DeSCA |
+| PDFormer | Transformer-based | PDFormer w/ DeSCA |
+| EAC | STGNN-based | EAC w/ DeSCA |
+| STBP | Frequency-based | STBP w/ DeSCA |
 
 DeSCA is not a standalone forecasting model.
-Instead, it serves as a plug-and-play continual adaptation module that can be integrated into different streaming spatio-temporal forecasting backbones.
 
+Instead, it functions as a decoupled and selective continual adaptation framework that can be seamlessly integrated into diverse streaming spatio-temporal forecasting backbones, including RNN-based, Transformer-based, STGNN-based, and frequency-based architectures.
 
 
 ## 🔗 Acknowledgement

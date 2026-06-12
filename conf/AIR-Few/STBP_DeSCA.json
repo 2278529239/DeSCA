@@ -18,9 +18,8 @@
         "out_channel": 12,
         "hidden_channel": 192
     },
-    "method": "STBP",
-    "logname": "STBP",
-
+    "method": "STBP_DeSCA",
+    "logname": "STBP_DeSCA",
     
     "init": true,
     "train": 1

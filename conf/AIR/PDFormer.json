@@ -1,45 +1,66 @@
 {
     "begin_year": 2016,
     "end_year": 2019,
+
     "dropout": 0.0,
     "lr": 0.01,
-    "batch_size": 64,
+    "batch_size": 4,
     "epoch": 100,
+
     "gpuid": 1,
+
     "loss": "mse",
     "activation": "relu",
     "scheduler": "epo",
+
     "y_len": 12,
     "x_len": 12,
+
     "data_process": 0,
+
     "raw_data_path": "data/AIR/RawData/",
     "save_data_path": "data/AIR/FastData/",
     "graph_path": "data/AIR/graph/",
     "model_path": "log/AIR/",
-    "gcn":{
+
+    "gcn": {
         "in_channel": 12,
         "out_channel": 12,
         "hidden_channel": 64
     },
 
-    "tcn":{
+    "tcn": {
         "in_channel": 1,
         "out_channel": 1,
         "kernel_size": 3,
         "dilation": 1
     },
-    
-    "method": "EAC",
-    "logname": "eac",
+
+    "method": "PDFormer",
+    "logname": "pdformer",
+
+
+    "embed_dim": 48,
+    "lape_dim": 8,
+    "geo_num_heads": 2,
+    "sem_num_heads": 2,
+    "t_num_heads": 2,
+    "mlp_ratio": 2.0,
+    "qkv_bias": true,
+    "attn_drop": 0.0,
+    "drop_path": 0.0,
+    "s_attn_size": 3,
+    "t_attn_size": 3,
+    "enc_depth": 2,
+    "type_ln": "pre",
+    "max_node_size": 1300,
+    "geo_mask_hop": 3,
+    "sem_topk": 20,
     "init": true,
     "train": 1,
     "auto_test": 1,
-
     "strategy": "retrain",
-
     "detect": false,
-
     "ewc": false,
-    
     "replay": false
 }

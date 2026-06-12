@@ -1,18 +1,38 @@
 import sys, argparse, torch
 sys.path.append("src/")
 import os
+import logging
 import numpy as np
 import os.path as osp
 import networkx as nx
 from torch_geometric.loader import DataLoader
 from utils.data_convert import generate_samples
-from src.model.modelSTBP import STBP
+from src.model.modelSTBP_DeSCA import STBP_DeSCA
 from src.dataer.SpatioTemporalDataset import SpatioTemporalDataset
 from utils.initialize import init, seed_anything, init_log
 from utils.common_toolsSTBP import mkdirs, load_best_model
-from src.trainer.default_trainerSTBP import train, test_model
+from src.trainer.default_trainerSTBP_DeSCA import train, test_model
+
+def build_dev_logger(log_path):
+    os.makedirs(os.path.dirname(log_path), exist_ok=True)
+    logger = logging.getLogger("dev_logger")
+    logger.setLevel(logging.INFO)
+    if logger.handlers:
+        logger.handlers.clear()
+
+    fh = logging.FileHandler(log_path)
+    formatter = logging.Formatter(
+        fmt="%(asctime)s | Year=%(year)s | Epoch=%(epoch)s | Dt=%(Dt).4f | Ds=%(Ds).4f | G_t=%(G_t).4f | G_s=%(G_s).4f | tau_t=%(tau_t).4f | tau_s=%(tau_s).4f | Mode=%(mode)s"
+    )
+    fh.setFormatter(formatter)
+    logger.addHandler(fh)
+    logger.propagate = False
+    return logger
 
 def main(args):
+    args.dev_logger = build_dev_logger(
+        osp.join(args.path, "deviation.log")
+    )
     args.logger.info("params : %s", vars(args))
     args.result = {"3":{" MAE":{}, "MAPE":{}, "RMSE":{}}, "6":{" MAE":{}, "MAPE":{}, "RMSE":{}}, "12":{" MAE":{}, "MAPE":{}, "RMSE":{}}, "Avg":{" MAE":{}, "MAPE":{}, "RMSE":{}}}
     mkdirs(args.save_data_path)
@@ -26,6 +46,7 @@ def main(args):
             vars(args)["init_graph_size"] = graph.number_of_nodes()
             vars(args)["subgraph"] = graph
             vars(args)["base_node_size"] = graph.number_of_nodes()
+            args.logger.info(f"base_node_size: {vars(args)['base_node_size']}")
         else:
             vars(args)["init_graph_size"] = args.graph_size
 
@@ -74,6 +95,7 @@ def main(args):
             #info = "year\t{:<4}\ttotal_time\t{:>10.4f}\taverage_time\t{:>10.4f}\tepoch\t{}".format(year, args.result[year]["total_time"], args.result[year]["average_time"], args.result[year]['epoch_num'])
             #total_time += args.result[year]["total_time"]
             #args.logger.info(info)
+
     for year in range(args.begin_year, args.end_year+1):
         if year in args.result:
             info = (
@@ -102,7 +124,7 @@ def main(args):
             total_time += args.result[year]["total_time"]
             args.logger.info(info)
     args.logger.info("total time: {:.4f}".format(total_time))
-    #统计每轮时间
+    # track per-period training time
     avg_train_times = []
     for year in range(args.begin_year, args.end_year+1):
         if year in args.result:
@@ -136,20 +158,28 @@ def main(args):
 
 if __name__ == "__main__":
     current_pid = os.getpid()
-    print(f"当前进程号(PID): {current_pid}")
+    print(f"Current PID: {current_pid}")
     parser = argparse.ArgumentParser(formatter_class = argparse.RawTextHelpFormatter)
     parser.add_argument("--conf", type = str, default = "conf/test.json")
     parser.add_argument("--seed", type = int, default = 42)
     parser.add_argument("--paral", type = int, default = 0)
-    parser.add_argument("--gpuid", type = int, default = 2)
+    parser.add_argument("--gpuid", type = int, default = 1)
     parser.add_argument("--logname", type = str, default = "info")
     parser.add_argument("--method", type = str, default = "STBP")
     parser.add_argument("--load_first_year", type = int, default = 0, help="0: training first year, 1: load from model path of first year")
     parser.add_argument("--first_year_model_path", type = str, default = "", help='specify a pretrained model root')
+    
+    parser.add_argument('--tau_s', type=float, default=0.1, help='spatial gate tau')
+    parser.add_argument('--tau_t', type=float, default=0.1, help='temporal gate tau')
+    parser.add_argument('--prototype_num', type=int, default=10, help='number of prototypes')
+    parser.add_argument('--rank', type=int, default=6, help='rank')
+    
     args = parser.parse_args()
     vars(args)["device"] = torch.device("cuda:{}".format(args.gpuid)) if torch.cuda.is_available() and args.gpuid != -1 else "cpu"
-    vars(args)["methods"] = {'STBP': STBP}
+    vars(args)["methods"] = {'STBP_DeSCA': STBP_DeSCA}
     init(args)
+    if not hasattr(args, "prototype_num"):
+        args.prototype_num = 10
     seed_anything(args.seed)
     init_log(args)
     main(args)
