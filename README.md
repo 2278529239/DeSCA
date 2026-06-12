@@ -1,14 +1,17 @@
 <div align="center">
-  <h2><b><big>🔌 DeSCA</big>
 
- <u>De</u>viation-aware <u>S</u>patio-temporal <u>C</u>ontinual <u>A</u>daptation: A Plug-and-Play Framework for Streaming Spatio-Temporal Prediction</b></h2>
-  <p><em>Paper under review</em></p>
+# 🔌 DeSCA
+
+### Streaming Spatio-Temporal Prediction: A Decoupled and Selective Continual Adaptation Framework
+
+<p><em>Paper under review</em></p>
+
 </div>
+
 <div align="center">
 
-</div>
-<div align="center">
-> ⭐ DeSCA is a plug-and-play framework for streaming spatio-temporal prediction, enabling continual adaptation to evolving graph structures and distribution shifts.
+⭐ DeSCA is a decoupled and selective continual adaptation framework for streaming spatio-temporal prediction.
+
 </div>
 
 ## Updates/News
