@@ -53,6 +53,14 @@ The framework supports the following streaming spatio-temporal datasets:
 
 Please download the datasets and place them in the `data/` directory.
 
+**Directory names should be kept as follows:**
+
+```text
+data/
+├── PEMS03/
+├── PEMS04/
+└── AIR/
+
 ## 🚀 Getting Started
 
 ### Installation
